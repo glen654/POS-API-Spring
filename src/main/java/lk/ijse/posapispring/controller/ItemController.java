@@ -44,4 +44,22 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping(value = "/{itemCode}")
+    public ResponseEntity<Void> updateItem(@PathVariable ("itemCode") String itemCode,
+                                           @RequestBody ItemDTO itemDTO){
+
+        try {
+            if(!RegEx.itemCodeMatcher(itemCode) || itemDTO == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            itemService.updateItem(itemCode,itemDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (ItemNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
