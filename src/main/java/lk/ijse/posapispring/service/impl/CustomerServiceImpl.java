@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(String customerId) {
         Optional<CustomerEntity> existCustomer = customerDao.findById(customerId);
         if(!existCustomer.isPresent()){
-            throw new CustomerNotFoundException("Customer Not Found");
+            throw new CustomerNotFoundException("Customer ID With" + customerId + "Not Found");
         }else{
             customerDao.deleteById(customerId);
         }
@@ -45,11 +46,17 @@ public class CustomerServiceImpl implements CustomerService {
     public void updateCustomer(String customerId, CustomerDTO customerDTO) {
         Optional<CustomerEntity> tmpCustomer = customerDao.findById(customerId);
         if(!tmpCustomer.isPresent()){
-            throw new CustomerNotFoundException("Customer Not Found");
+            throw new CustomerNotFoundException("Customer ID With" + customerId + "Not Found");
         }else{
             tmpCustomer.get().setCustomerName(customerDTO.getCustomerName());
             tmpCustomer.get().setCustomerAddress(customerDTO.getCustomerAddress());
             tmpCustomer.get().setCustomerTel(customerDTO.getCustomerTel());
         }
+    }
+
+    @Override
+    public List<CustomerDTO> getAllCustomers() {
+        List<CustomerEntity> allCustomers = customerDao.findAll();
+        return mapping.asCustomerDTOList(allCustomers);
     }
 }

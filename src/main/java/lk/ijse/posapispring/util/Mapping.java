@@ -5,8 +5,11 @@ import lk.ijse.posapispring.dto.impl.ItemDTO;
 import lk.ijse.posapispring.entity.impl.CustomerEntity;
 import lk.ijse.posapispring.entity.impl.ItemEntity;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class Mapping {
@@ -20,6 +23,10 @@ public class Mapping {
 
     public CustomerDTO toCustomerDto(CustomerEntity customerEntity){
         return modelMapper.map(customerEntity,CustomerDTO.class);
+    }
+
+    public List<CustomerDTO> asCustomerDTOList(List<CustomerEntity> customerEntityList){
+        return modelMapper.map(customerEntityList, new TypeToken<List<CustomerDTO>>() {}.getType());
     }
 
     //For Item Mapping
