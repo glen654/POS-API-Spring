@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,5 +53,11 @@ public class ItemServiceImpl implements ItemService {
             tmpItem.get().setQtyOnHand(itemDTO.getQtyOnHand());
             tmpItem.get().setUnitPrice(itemDTO.getUnitPrice());
         }
+    }
+
+    @Override
+    public List<ItemDTO> getAllItems() {
+        List<ItemEntity> allItems = itemDao.findAll();
+        return mapping.asItemDTOList(allItems);
     }
 }
