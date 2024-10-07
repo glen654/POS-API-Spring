@@ -5,12 +5,15 @@ import lk.ijse.posapispring.dto.impl.ItemDTO;
 import lk.ijse.posapispring.entity.impl.CustomerEntity;
 import lk.ijse.posapispring.entity.impl.ItemEntity;
 import lk.ijse.posapispring.exception.DataPersistException;
+import lk.ijse.posapispring.exception.ItemNotFoundException;
 import lk.ijse.posapispring.service.ItemService;
 import lk.ijse.posapispring.util.AppUtil;
 import lk.ijse.posapispring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,6 +29,16 @@ public class ItemServiceImpl implements ItemService {
         ItemEntity saveItem = itemDao.save(mapping.toItemEntity(itemDTO));
         if(saveItem == null){
             throw new DataPersistException("Item Not Saved");
+        }
+    }
+
+    @Override
+    public void deleteItem(String itemCode) {
+        Optional<ItemEntity> existItem = itemDao.findById(itemCode);
+        if(!existItem.isPresent()){
+            throw new ItemNotFoundException("Item ID With" + itemCode + "Not Found");
+        }else{
+            itemDao.deleteById(itemCode);
         }
     }
 }

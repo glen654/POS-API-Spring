@@ -2,15 +2,14 @@ package lk.ijse.posapispring.controller;
 
 import lk.ijse.posapispring.dto.impl.ItemDTO;
 import lk.ijse.posapispring.exception.DataPersistException;
+import lk.ijse.posapispring.exception.ItemNotFoundException;
 import lk.ijse.posapispring.service.ItemService;
+import lk.ijse.posapispring.util.RegEx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/item")
@@ -26,6 +25,21 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping(value = "/{itemCode}")
+    public ResponseEntity<Void> deleteItem(@PathVariable ("itemCode") String itemCode){
+        try {
+            if(!RegEx.itemCodeMatcher(itemCode)){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            itemService.deleteItem(itemCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (ItemNotFoundException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
