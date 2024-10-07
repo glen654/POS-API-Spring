@@ -1,5 +1,7 @@
 package lk.ijse.posapispring.controller;
 
+import lk.ijse.posapispring.customStatusCodes.SelectedCustomerAndItemErrorStatus;
+import lk.ijse.posapispring.dto.CustomerStatus;
 import lk.ijse.posapispring.dto.impl.CustomerDTO;
 import lk.ijse.posapispring.exception.CustomerNotFoundException;
 import lk.ijse.posapispring.exception.DataPersistException;
@@ -67,5 +69,13 @@ public class CustomerController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDTO> getAllCustomers(){
         return customerService.getAllCustomers();
+    }
+
+    @GetMapping(value = "/{customerId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public CustomerStatus getSelectedCustomer(@PathVariable ("customerId") String customerId){
+        if(!RegEx.customerIdMatcher(customerId)){
+            return new SelectedCustomerAndItemErrorStatus(1,"Customer ID is not valid");
+        }
+        return customerService.getCustomer(customerId);
     }
 }

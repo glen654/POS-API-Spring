@@ -1,6 +1,8 @@
 package lk.ijse.posapispring.service.impl;
 
+import lk.ijse.posapispring.customStatusCodes.SelectedCustomerAndItemErrorStatus;
 import lk.ijse.posapispring.dao.CustomerDao;
+import lk.ijse.posapispring.dto.CustomerStatus;
 import lk.ijse.posapispring.dto.impl.CustomerDTO;
 import lk.ijse.posapispring.entity.impl.CustomerEntity;
 import lk.ijse.posapispring.exception.CustomerNotFoundException;
@@ -58,5 +60,16 @@ public class CustomerServiceImpl implements CustomerService {
     public List<CustomerDTO> getAllCustomers() {
         List<CustomerEntity> allCustomers = customerDao.findAll();
         return mapping.asCustomerDTOList(allCustomers);
+    }
+
+    @Override
+    public CustomerStatus getCustomer(String customerId) {
+        if(customerDao.existsById(customerId)){
+            CustomerEntity selectedCustomer = customerDao.getReferenceById(customerId);
+            return mapping.toCustomerDto(selectedCustomer);
+        }else {
+            return new SelectedCustomerAndItemErrorStatus(2,"Customer ID With" +
+                                                                                customerId + "Not Found");
+        }
     }
 }
