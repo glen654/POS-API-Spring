@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +23,5 @@ public class OrderEntity implements SuperEntity {
 
     private LocalDate orderDate;
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<OrderDetailsEntity> orderDetailsEntityList = new ArrayList<>();
+    private List<OrderDetailsEntity> orderDetailsEntityList;
 }
