@@ -2,8 +2,12 @@ package lk.ijse.posapispring.util;
 
 import lk.ijse.posapispring.dto.impl.CustomerDTO;
 import lk.ijse.posapispring.dto.impl.ItemDTO;
+import lk.ijse.posapispring.dto.impl.OrderDTO;
+import lk.ijse.posapispring.dto.impl.OrderDetailsDTO;
 import lk.ijse.posapispring.entity.impl.CustomerEntity;
 import lk.ijse.posapispring.entity.impl.ItemEntity;
+import lk.ijse.posapispring.entity.impl.OrderDetailsEntity;
+import lk.ijse.posapispring.entity.impl.OrderEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +45,15 @@ public class Mapping {
     public List<ItemDTO> asItemDTOList(List<ItemEntity> itemEntityList){
         return modelMapper.map(itemEntityList, new TypeToken<List<ItemDTO>>() {}.getType());
     }
+
+    //For order
+    public OrderEntity toOrderEntity(OrderDTO orderDTO){
+        return modelMapper.map(orderDTO, OrderEntity.class);
+    }
+
+    //For Order Details
+    public OrderDetailsEntity toOrderDetailsEntity(OrderDetailsDTO orderDetailsDTO){
+        return modelMapper.map(orderDetailsDTO,OrderDetailsEntity.class);
+    }
+
 }
