@@ -1,10 +1,9 @@
 package lk.ijse.posapispring.service.impl;
 
-import lk.ijse.posapispring.customStatusCodes.SelectedCustomerAndItemErrorStatus;
+import lk.ijse.posapispring.customStatusCodes.SelectedCustomerAndItemAndOrderErrorStatus;
 import lk.ijse.posapispring.dao.ItemDao;
 import lk.ijse.posapispring.dto.ItemStatus;
 import lk.ijse.posapispring.dto.impl.ItemDTO;
-import lk.ijse.posapispring.entity.impl.CustomerEntity;
 import lk.ijse.posapispring.entity.impl.ItemEntity;
 import lk.ijse.posapispring.exception.DataPersistException;
 import lk.ijse.posapispring.exception.ItemNotFoundException;
@@ -69,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
             ItemEntity selectedItem = itemDao.getReferenceById(itemCode);
             return mapping.toItemDto(selectedItem);
         }else {
-            return new SelectedCustomerAndItemErrorStatus(2,"Item Code With" + itemCode
+            return new SelectedCustomerAndItemAndOrderErrorStatus(2,"Item Code With" + itemCode
                                                                                                 + "Not Found");
         }
     }

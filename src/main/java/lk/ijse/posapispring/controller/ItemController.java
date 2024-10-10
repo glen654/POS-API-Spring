@@ -1,6 +1,6 @@
 package lk.ijse.posapispring.controller;
 
-import lk.ijse.posapispring.customStatusCodes.SelectedCustomerAndItemErrorStatus;
+import lk.ijse.posapispring.customStatusCodes.SelectedCustomerAndItemAndOrderErrorStatus;
 import lk.ijse.posapispring.dto.ItemStatus;
 import lk.ijse.posapispring.dto.impl.ItemDTO;
 import lk.ijse.posapispring.exception.DataPersistException;
@@ -74,7 +74,7 @@ public class ItemController {
     @GetMapping(value = "/{itemCode}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ItemStatus getSelectedItem(@PathVariable ("itemCode") String itemCode){
         if(!RegEx.itemCodeMatcher(itemCode)){
-            return new SelectedCustomerAndItemErrorStatus(1,"Item Code Is Not Valid");
+            return new SelectedCustomerAndItemAndOrderErrorStatus(1,"Item Code Is Not Valid");
         }
         return itemService.getItem(itemCode);
     }
