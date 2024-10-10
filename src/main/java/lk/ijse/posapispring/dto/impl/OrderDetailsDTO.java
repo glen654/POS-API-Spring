@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class OrderDetailsDTO implements OrderDetailsStatus {
     private String detailsId;
     private OrderDTO order;
-    private ItemDTO item;
+    private String item;
     private int orderQty;
     private double unitPrice;
 }

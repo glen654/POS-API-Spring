@@ -16,11 +16,7 @@ import java.util.List;
 public class OrderEntity implements SuperEntity {
     @Id
     private String orderId;
-
-    @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
-    private CustomerEntity customer;
-
+    private String customerId;
     private LocalDate orderDate;
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<OrderDetailsEntity> orderDetailsEntityList;

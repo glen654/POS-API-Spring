@@ -14,14 +14,16 @@ import lombok.NoArgsConstructor;
 public class OrderDetailsEntity implements SuperEntity {
     @Id
     private String detailsId;
+
     @ManyToOne
-    @MapsId("orderId")
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "orderId",referencedColumnName = "orderId")
     private OrderEntity order;
+
     @ManyToOne
-    @MapsId("itemCode")
-    @JoinColumn(name = "itemCode")
+    @JoinColumn(name = "itemCode",referencedColumnName = "itemCode")
     private ItemEntity item;
+
     private int orderQty;
+
     private double unitPrice;
 }

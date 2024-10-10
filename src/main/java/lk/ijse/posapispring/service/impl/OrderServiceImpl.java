@@ -1,10 +1,12 @@
 package lk.ijse.posapispring.service.impl;
 
+import lk.ijse.posapispring.dao.CustomerDao;
 import lk.ijse.posapispring.dao.ItemDao;
 import lk.ijse.posapispring.dao.OrderDao;
 import lk.ijse.posapispring.dao.OrderDetailsDao;
 import lk.ijse.posapispring.dto.impl.OrderDTO;
 import lk.ijse.posapispring.dto.impl.OrderDetailsDTO;
+import lk.ijse.posapispring.entity.impl.CustomerEntity;
 import lk.ijse.posapispring.entity.impl.ItemEntity;
 import lk.ijse.posapispring.entity.impl.OrderDetailsEntity;
 import lk.ijse.posapispring.entity.impl.OrderEntity;
@@ -29,6 +31,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ItemDao itemDao;
     @Autowired
+    private CustomerDao customerDao;
+    @Autowired
     private Mapping mapping;
 
     @Override
@@ -41,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
             }
 
             for(OrderDetailsDTO orderDetailsDTO : orderDetailsDTOS){
+                orderDetailsDTO.setDetailsId(AppUtil.generateOrderDetailsId());
                 OrderDetailsEntity orderDetailsEntity = mapping.toOrderDetailsEntity(orderDetailsDTO);
                 orderDetailsEntity.setOrder(saveOrder);
                 orderDetailsDao.save(orderDetailsEntity);

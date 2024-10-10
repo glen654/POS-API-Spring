@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class OrderDTO implements OrderStatus {
     private String orderId;
-    private CustomerDTO customer;
+    private String customerId;
     private LocalDate orderDate;
     private List<OrderDetailsDTO> orderDetails;
 }

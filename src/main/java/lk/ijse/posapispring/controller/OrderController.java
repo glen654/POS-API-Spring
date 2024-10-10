@@ -25,8 +25,10 @@ public class OrderController {
             orderService.placeOrder(orderRequestDTO.getOrder(),orderRequestDTO.getOrderDetails());
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
