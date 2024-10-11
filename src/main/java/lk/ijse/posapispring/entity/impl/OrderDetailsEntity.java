@@ -22,7 +22,6 @@ public class OrderDetailsEntity implements SuperEntity {
     @ManyToOne
     @JoinColumn(name = "itemCode",referencedColumnName = "itemCode")
     private ItemEntity item;
-
     private int orderQty;
 
     private double unitPrice;

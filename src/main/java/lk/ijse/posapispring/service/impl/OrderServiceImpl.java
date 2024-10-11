@@ -6,7 +6,6 @@ import lk.ijse.posapispring.dao.OrderDao;
 import lk.ijse.posapispring.dao.OrderDetailsDao;
 import lk.ijse.posapispring.dto.impl.OrderDTO;
 import lk.ijse.posapispring.dto.impl.OrderDetailsDTO;
-import lk.ijse.posapispring.entity.impl.CustomerEntity;
 import lk.ijse.posapispring.entity.impl.ItemEntity;
 import lk.ijse.posapispring.entity.impl.OrderDetailsEntity;
 import lk.ijse.posapispring.entity.impl.OrderEntity;

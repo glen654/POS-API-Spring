@@ -4,6 +4,7 @@ import lk.ijse.posapispring.dto.OrderDetailsStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class OrderDetailsDTO implements OrderDetailsStatus {
     private String detailsId;
     private OrderDTO order;
-    private String item;
+    private ItemDTO item;
     private int orderQty;
     private double unitPrice;
 }
