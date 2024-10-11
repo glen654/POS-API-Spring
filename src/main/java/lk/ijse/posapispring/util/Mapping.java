@@ -61,4 +61,8 @@ public class Mapping {
         return modelMapper.map(orderDetailsDTO,OrderDetailsEntity.class);
     }
 
+    public List<OrderDetailsDTO> asOrderDetailsDTOList(List<OrderDetailsEntity> orderDetailsEntities){
+        return modelMapper.map(orderDetailsEntities,new TypeToken<List<OrderDetailsDTO>>() {}.getType());
+    }
+
 }

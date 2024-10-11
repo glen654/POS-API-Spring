@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface OrderService {
     void placeOrder(OrderDTO orderDTO, List<OrderDetailsDTO> orderDetailsDTOS);
+    List<OrderDetailsDTO> getAllDetails();
 }

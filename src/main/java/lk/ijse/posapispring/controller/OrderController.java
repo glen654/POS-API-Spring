@@ -1,5 +1,6 @@
 package lk.ijse.posapispring.controller;
 
+import lk.ijse.posapispring.dto.impl.OrderDetailsDTO;
 import lk.ijse.posapispring.dto.impl.OrderRequestDTO;
 import lk.ijse.posapispring.exception.DataPersistException;
 import lk.ijse.posapispring.service.OrderService;
@@ -7,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -32,4 +32,9 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<OrderDetailsDTO> getAllOrderDetails(){
+        return orderService.getAllDetails();
+    }
+
 }

@@ -67,4 +67,10 @@ public class OrderServiceImpl implements OrderService {
             throw e;
         }
     }
+
+    @Override
+    public List<OrderDetailsDTO> getAllDetails() {
+        List<OrderDetailsEntity> allOrders = orderDetailsDao.findAll();
+        return mapping.asOrderDetailsDTOList(allOrders);
+    }
 }
