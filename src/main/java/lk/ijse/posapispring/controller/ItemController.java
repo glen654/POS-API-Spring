@@ -7,6 +7,8 @@ import lk.ijse.posapispring.exception.DataPersistException;
 import lk.ijse.posapispring.exception.ItemNotFoundException;
 import lk.ijse.posapispring.service.ItemService;
 import lk.ijse.posapispring.util.RegEx;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,16 +22,19 @@ import java.util.List;
 public class ItemController {
     @Autowired
     private ItemService itemService;
-
+    private static Logger logger = LoggerFactory.getLogger(CustomerController.class);
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
                 produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveItem(@RequestBody ItemDTO itemDTO){
         try {
             itemService.saveItem(itemDTO);
+            logger.info("Item save successful");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
+            logger.warn("Returning 400 Bad Request",e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            logger.error("Item save unsuccessful",e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -41,10 +46,13 @@ public class ItemController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             itemService.deleteItem(itemCode);
+            logger.info("Item delete successful");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (ItemNotFoundException e){
+            logger.warn("Returning 404 Not Found",e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
+            logger.error("Item delete unsuccessful",e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -57,12 +65,13 @@ public class ItemController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             itemService.updateItem(itemCode,itemDTO);
+            logger.info("Item update successful");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (ItemNotFoundException e){
-            e.printStackTrace();
+            logger.warn("Returning 400 Bad Request",e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Item update unsuccessful",e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -74,6 +83,7 @@ public class ItemController {
     @GetMapping(value = "/{itemCode}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ItemStatus getSelectedItem(@PathVariable ("itemCode") String itemCode){
         if(!RegEx.itemCodeMatcher(itemCode)){
+            logger.error("Returning 400 Bad Request");
             return new SelectedCustomerAndItemAndOrderErrorStatus(1,"Item Code Is Not Valid");
         }
         return itemService.getItem(itemCode);
