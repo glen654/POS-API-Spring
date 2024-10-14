@@ -3,6 +3,9 @@
 
 This API is designed to manage the core functionalities of a Point-of-Sale (POS) system, including managing customers, items, and orders. The API is built using the Spring Framework and follows a RESTful architecture.
 
+## API Documentation
+https://documenter.getpostman.com/view/36176457/2sAXxTbVum
+
 ## Features
 
 * Customer Management: Add, update, delete, and retrieve customers.
@@ -72,11 +75,11 @@ All API endpoints are prefixed with api/v1/.
 
 #### 2.Navigate to the project directory
 
-`cd` POS-API-Spring
+`cd` `POS-API-Spring`
 
 #### 3.Build and run the application
 
-`mvn` clean install
+`mvn` `clean install`
 
 
 ## License
